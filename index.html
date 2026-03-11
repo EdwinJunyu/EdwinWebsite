@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EdwinChen_info</title>
+
+  <link rel="stylesheet" href="./index.css" />
+  <script src="./index.js" defer></script>
+  
+</head>
+
+<body>
+  <!-- ====== Part 1: Top Navbar ====== -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="#home" aria-label="Go to Home">Home</a>
+
+      <button
+        class="nav__toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-controls="primary-menu"
+        aria-expanded="false"
+    >
+  <span class="nav__toggle-bar" aria-hidden="true"></span>
+</button>
+
+
+      <ul class="nav__menu" id="primary-menu">
+        <li class="nav__item"><a class="nav__link" href="#resource">Resource</a></li>
+        <li class="nav__item"><a class="nav__link" href="#experience">Experience</a></li>
+        <li class="nav__item"><a class="nav__link" href="#hobby">Hobby</a></li>
+      </ul>
+    </nav>
+    <div class="nav__overlay" data-nav-overlay></div>
+  </header>
+
+  <!-- ====== Part 2: Hero / About ====== -->
+<section class="hero" id="home">
+  <div class="hero__inner">
+    <!-- 左：图片（约40%） -->
+    <div class="hero__media">
+      <img
+        class="hero__img"
+        src="./index_img/头像.jpeg"
+        alt="Junyu Chen - Edwin"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- 右：文字（约60%） -->
+    <div class="hero__content">
+      <h1 class="hero__title">Junyu Chen - Edwin</h1>
+
+      <p class="hero__line">Cantonese - Mandarin - English - Japanese</p>
+      <p class="hero__line">Java SpringBoot - Java Spring Ai - RAG - Python Data Analysis &amp; Web Crawler- H5 Web</p>
+
+      <p class="hero__line hero__line--spaced">China Guangzhou &amp; Canada Vancouver</p>
+      <p class="hero__line">Simon Fraser University</p>
+
+      <p class="hero__line hero__email">
+        Email:
+        <a class="hero__email-link" href="mailto:JunyuChen0907@gmail.com">
+          JunyuChen0907@gmail.com
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Part 3: Contact / Carousel ====== -->
+<section class="contact" id="contact">
+  <div class="contact__inner">
+    <div class="contact__header">
+      <h2 class="contact__title">
+        Contact me <span class="contact__arrow" aria-hidden="true">⬇️</span>
+      </h2>
+    </div>
+
+    <div class="carousel" data-carousel="root" aria-roledescription="carousel">
+      <div class="carousel__viewport" data-carousel="viewport">
+        <div class="carousel__track" data-carousel="track">
+          <!-- 你可以放任意张：IG二维码、微信二维码、邮箱图、GitHub图等 -->
+          <figure class="carousel__slide" data-carousel="slide">
+            <img class="carousel__img" src="./index_img/Ins.png" alt="Instagram QR Code" loading="lazy" />
+            <figcaption class="carousel__caption">Instagram: EDWIN_JUNYU</figcaption>
+          </figure>
+
+          <figure class="carousel__slide" data-carousel="slide">
+            <img class="carousel__img" src="./index_img/WeChat.JPG" alt="WeChat QR Code" loading="lazy" />
+            <figcaption class="carousel__caption">WeChat</figcaption>
+          </figure>
+
+          <figure class="carousel__slide" data-carousel="slide">
+            <img class="carousel__img" src="./index_img/QQ.jpg" alt="QQ QR Code" loading="lazy" />
+            <figcaption class="carousel__caption">GitHub</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- 小圆点指示器（JS自动生成） -->
+      <div class="carousel__dots" data-carousel="dots" aria-label="Slide indicators"></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
+

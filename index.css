@@ -1,0 +1,486 @@
+html, body{
+  margin: 0;
+  padding: 0;
+  height: auto !important;
+  min-height: 100%;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* iOS 更顺滑 */
+}
+*, *::before, *::after{ box-sizing: border-box; }
+
+/* ====== Top Navbar (Part 1) ====== */
+:root{
+  --nav-bg: #2f2f2f;
+  --nav-text: #ffffff;
+  --nav-muted: rgba(255,255,255,0.75);
+  --nav-border: rgba(255,255,255,0.12);
+  --nav-radius: 8px;
+}
+
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav{
+  height: 56px;
+  background: var(--nav-bg);
+  color: var(--nav-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.nav__brand{
+  color: var(--nav-text);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1;
+}
+
+.nav__menu{
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav__link{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 14px;
+  color: var(--nav-text);
+  text-decoration: none;
+  border: 1px solid var(--nav-border);
+  border-radius: var(--nav-radius);
+  font-size: 14px;
+  background: rgba(255,255,255,0.06);
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.nav__link:hover{
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+
+.nav__link:active{
+  transform: translateY(0);
+}
+
+.nav__link.active{
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.35);
+}
+
+/* hamburger button (hidden on desktop) */
+.nav__toggle{
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--nav-border);
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.nav__toggle:focus{
+  outline: 2px solid rgba(255,255,255,0.35);
+  outline-offset: 2px;
+}
+
+.nav__toggle-bar{
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--nav-text);
+  margin: 4px auto;
+  border-radius: 2px;
+}
+
+/* ====== Mobile Drawer Navbar ====== */
+@media (max-width: 720px){
+  /* toggle button */
+  .nav__toggle{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 40px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  /* one-bar */
+  .nav__toggle-bar{
+    width: 22px;
+    height: 3px;
+    background: var(--nav-text);
+    border-radius: 999px;
+    display: block;
+    opacity: 0.95;
+  }
+
+  /* overlay */
+  .nav__overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.42);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+    z-index: 2500;
+  }
+
+  .nav__overlay.is-open{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* drawer */
+  .nav__menu{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+
+    width: min(62vw, 100px);      /* ✅ 更窄 */
+    padding: 62px 12px 12px;      /* ✅ 顶部给导航留空间 */
+    margin: 0;
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    background: rgba(47,47,47,0.96);
+    border-left: 1px solid rgba(255,255,255,0.12);
+
+    transform: translateX(100%);
+    transition: transform 240ms ease;
+    z-index: 3000;
+
+    overflow-y: auto;
+  }
+
+  .nav__menu.is-open{
+    transform: translateX(0);
+  }
+
+  /* ✅ 把按钮从“大块”改成更轻的列表项 */
+  .nav__item{
+    margin: 0;
+  }
+
+  .nav__link{
+    width: 100%;
+    height: 35px;
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;     /* ✅ 左对齐更像常见 drawer */
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.05);
+
+    font-size: 14px;
+    color: var(--nav-text);
+    text-decoration: none;
+    letter-spacing: 0.2px;
+  }
+
+  .nav__link:hover{
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.18);
+    transform: none; /* ✅ 移动端不需要上浮 */
+  }
+
+  .nav__link:active{
+    background: rgba(255,255,255,0.14);
+  }
+
+  /* ✅ 可选：在抽屉顶上加一个细分隔线视觉更稳（不用改 HTML） */
+  .nav__menu::before{
+    content: "";
+    position: absolute;
+    top: 56px;
+    left: 14px;
+    right: 14px;
+    height: 1px;
+    background: rgba(255,255,255,0.10);
+  }
+}
+
+
+/* ====== Part 2: Hero / About (ALWAYS two-column) ====== */
+.hero{
+  background: #f3f1ef;      /* 接近你截图浅灰 */
+  padding: 28px 16px;
+}
+
+.hero__inner{
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: row;     /* 永远左右 */
+  flex-wrap: nowrap;       /* 禁止换行 => 不会上下堆叠 */
+  align-items: center;
+  gap: 28px;
+}
+
+/* 左：图片区域（约40%） */
+.hero__media{
+  flex: 0 0 40%;
+  min-width: 260px;        /* 防止太窄导致挤成一条 */
+}
+
+/* 图片本体 */
+.hero__img{
+  width: 100%;
+  height: auto;
+  display: block;
+
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* 右：文字区域（约60%） */
+.hero__content{
+  flex: 1 1 60%;
+  padding: 6px 10px;
+
+  text-align: center;      /* 你原图右侧整体居中 */
+}
+
+.hero__title{
+  margin: 0 0 14px 0;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #2a2a2a;
+}
+
+.hero__line{
+  margin: 10px 0;
+  font-size: 18px;
+  color: #2f2f2f;
+}
+
+.hero__line--spaced{
+  margin-top: 18px;
+}
+
+.hero__email{
+  margin-top: 16px;
+}
+
+.hero__email-link{
+  color: #2f2f2f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ====== Responsive: 仍然左右，但缩放布局 ====== */
+@media (max-width: 900px){
+  .hero{
+    padding: 22px 14px;
+  }
+
+  .hero__inner{
+    gap: 18px;
+  }
+
+  .hero__media{
+    flex-basis: 42%;        /* 稍微给图片多一点，视觉更稳 */
+    min-width: 220px;
+  }
+
+  .hero__title{
+    font-size: 32px;
+  }
+
+  .hero__line{
+    font-size: 16px;
+    margin: 8px 0;
+  }
+}
+
+/* 小屏：仍然左右，不堆叠；把图片比例略降，给文字留空间 */
+@media (max-width: 720px){
+  .hero{
+    padding: 16px 12px;
+  }
+
+  .hero__inner{
+    gap: 12px;
+  }
+
+  .hero__media{
+    flex-basis: 38%;
+    min-width: 180px;
+  }
+
+  .hero__title{
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .hero__line{
+    font-size: 14px;
+    margin: 7px 0;
+  }
+
+  .hero__line--spaced{
+    margin-top: 12px;
+  }
+}
+
+/* 超小屏（例如 360px）：继续压缩字体和图片最小宽度 */
+@media (max-width: 420px){
+  .hero__media{
+    flex-basis: 36%;
+    min-width: 150px;
+  }
+
+  .hero__title{
+    font-size: 20px;
+  }
+
+  .hero__line{
+    font-size: 13px;
+  }
+}
+
+/* ====== Part 3: Contact / Carousel (Final, no buttons) ====== */
+.contact{
+  background: #f3f1ef;
+  padding: 26px 16px 40px;
+}
+
+.contact__inner{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contact__header{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;  /* 无按钮时：标题靠左 */
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.contact__title{
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2a2a2a;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* carousel shell */
+.carousel{
+  border-top: 1px dashed rgba(0,0,0,0.18);
+  padding-top: 18px;
+}
+
+.carousel__viewport{
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(0,0,0,0.08);
+
+  touch-action: pan-y;          /* 允许上下滚动，左右交给 JS swipe */
+}
+
+.carousel__track{
+  display: flex;
+  width: 100%;
+  transform: translateX(0);
+  transition: transform 320ms ease;
+  will-change: transform;
+}
+
+.carousel__slide{
+  flex: 0 0 100%;
+  margin: 0;
+  padding: 18px 14px 14px;
+
+  height: 360px;                /* 统一每页高度，避免不同图片比例导致抖动 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 图片统一框：二维码建议 contain（不裁剪） */
+.carousel__img{
+  width: 100%;
+  max-width: 380px;
+  height: 260px;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+}
+
+.carousel__caption{
+  margin-top: 10px;
+  font-size: 14px;
+  color: #2f2f2f;
+  opacity: 0.9;
+  text-align: center;
+}
+
+/* dots */
+.carousel__dots{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.carousel__dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+.carousel__dot.is-active{
+  background: rgba(0,0,0,0.35);
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 720px){
+  .contact{
+    padding: 18px 12px 28px;
+  }
+
+  .carousel__slide{
+    height: 320px;
+  }
+
+  .carousel__img{
+    max-width: 92%;
+    height: 230px;
+  }
+}
