@@ -276,17 +276,13 @@ html, body{
 }
 
 .hero__line{
-  margin: 10px 0;
+  margin: 5px 0;
   font-size: 18px;
   color: #2f2f2f;
 }
 
-.hero__line--spaced{
-  margin-top: 18px;
-}
-
 .hero__email{
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 .hero__email-link{
